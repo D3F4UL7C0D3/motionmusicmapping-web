@@ -9,18 +9,18 @@
 <meta property="og:description" content="Gesture becomes sound and light. Instruments for the hands and projection mapping played live.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://motionmusicmapping.com/">
-<meta name="theme-color" content="#07080c">
+<meta name="theme-color" content="#0e1019">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2307080c'/%3E%3Ccircle cx='16' cy='16' r='7' fill='none' stroke='%23dfe6ff' stroke-width='2'/%3E%3Ccircle cx='16' cy='16' r='2.5' fill='%23dfe6ff'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #07080c;
-    --bg-2: #0d0f16;
-    --line: #1c2030;
+    --bg: #0e1019;
+    --bg-2: #161926;
+    --line: #262b3f;
     --text: #e6e9f2;
-    --muted: #8a90a6;
+    --muted: #a2a8bf;
     --light: #dfe6ff;
     --warm: #c9a26a;
   }
@@ -50,7 +50,8 @@
     position: absolute; left: 0; right: 0; bottom: 12vh; pointer-events: none;
   }
   .hero h1 { font-size: clamp(44px, 8vw, 104px); line-height: 0.95; font-weight: 700; }
-  .hero p { margin: 22px 0 0; max-width: 34ch; font-size: clamp(18px, 2vw, 22px); color: var(--muted); }
+  .hero .by { margin-top: 14px; font: 500 15px "Space Grotesk", sans-serif; letter-spacing: 0.12em; text-transform: uppercase; color: var(--light); }
+  .hero p { margin: 22px 0 0; max-width: 40ch; font-size: clamp(18px, 2vw, 22px); color: var(--muted); }
   .hero .hint { position: absolute; right: 24px; bottom: 24px; font-size: 13px; color: var(--muted); letter-spacing: 0.04em; }
 
   section { padding: 120px 0; border-top: 1px solid var(--line); }
@@ -118,7 +119,8 @@
   <div class="copy">
     <div class="wrap">
       <h1>Gesture becomes<br>sound and light.</h1>
-      <p>Instruments played with the hands, and projection mapping played live. By Pablo Groove.</p>
+      <p>Instruments played with the hands, and projection mapping played live.</p>
+      <p class="by">By Pablo Groove</p>
     </div>
   </div>
   <div class="hint" id="hint">Move your hand over the page</div>
@@ -184,7 +186,7 @@
 </section>
 
 <footer>
-  <div class="wrap">© <span id="year">2026</span> Pablo Groove (Pablo Rivera) · MotionMusic Mapping</div>
+  <div class="wrap">© <span id="year">2026</span> Pablo Groove · MotionMusic Mapping</div>
 </footer>
 
 <script>
@@ -231,15 +233,15 @@ document.getElementById('year').textContent = new Date().getFullYear();
       idleT += 0.004;
       light.tx = W * (0.62 + 0.18 * Math.sin(idleT * 1.3));
       light.ty = H * (0.40 + 0.14 * Math.sin(idleT * 0.9 + 1.2));
-      light.tpower = 0.85;
+      light.tpower = 1.0;
     }
     light.x += (light.tx - light.x) * 0.08; light.y += (light.ty - light.y) * 0.08;
     light.power += (light.tpower - light.power) * 0.05;
 
-    ctx.fillStyle = '#07080c'; ctx.fillRect(0, 0, W, H);
-    const R = Math.min(900, Math.max(W, H)) * 0.24;
+    ctx.fillStyle = '#0e1019'; ctx.fillRect(0, 0, W, H);
+    const R = Math.min(1000, Math.max(W, H)) * 0.30;
     const g = ctx.createRadialGradient(light.x, light.y, 0, light.x, light.y, R * 1.4);
-    g.addColorStop(0, 'rgba(160,175,230,' + (0.16 * light.power) + ')');
+    g.addColorStop(0, 'rgba(160,175,230,' + (0.30 * light.power) + ')');
     g.addColorStop(1, 'rgba(160,175,230,0)');
     ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
 
@@ -248,7 +250,7 @@ document.getElementById('year').textContent = new Date().getFullYear();
       const d = Math.sqrt(dx * dx + dy * dy) / R;
       const lit = light.power / (1 + d * d * d * 3);
       const tw = reduce ? 0.5 : 0.5 + 0.5 * Math.sin(t * 0.0012 + p.p);
-      const a = 0.10 + 0.10 * tw + 0.9 * lit;
+      const a = 0.20 + 0.14 * tw + 0.85 * lit;
       // points are pushed gently away from the light, like dust in a beam
       const push = reduce ? 0 : 6 * lit;
       const ox = d > 0 ? dx / (d * R) * push : 0, oy = d > 0 ? dy / (d * R) * push : 0;
